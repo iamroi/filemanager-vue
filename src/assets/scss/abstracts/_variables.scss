@@ -1,0 +1,92 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass variables.
+// -----------------------------------------------------------------------------
+
+// Bootstrap Overrides
+$enable-rounded: true;
+//$enable-shadows: true;
+$enable-transitions: true;
+$enable-prefers-reduced-motion-media-query:   true;
+
+// Custom Bootstrap Colors
+$red:        #D04762;
+$yellow:     #F6D87B;
+$green:      #58CA80;
+
+$gray-base: #111720;
+$gray-100:  #E5ECF9;
+$gray-200:  #99A4B9;
+$gray-300:  #6A7484;
+$gray-400:  #3F4656;
+$gray-500:  #2F3646;
+$gray-600:  #242837;
+$gray-700:  #1F2332;
+$gray-800:  #181C29;
+$gray-900:  #161B24;
+
+$primary: #22C4F8;
+$primary-light: #22C4F8;
+$secondary: #5629EE;
+
+
+$success:       $green;
+//$info:          $light-blue;
+$info:          $secondary;
+$warning:       $yellow;
+$danger:        $red;
+
+$theme-colors: ();
+$theme-colors: map-merge(
+        (
+            "primary":    $primary,
+            "secondary":  $secondary,
+            "success":    $success,
+            "info":       $info,
+            "warning":    $warning,
+            "danger":     $danger,
+            //"light":      $light,
+            //"dark":       $dark
+        ),
+        $theme-colors
+);
+
+$spacer: 1rem;
+$spacers: ();
+$spacers: map-merge(
+        (
+            0: 0,
+            1: ($spacer * .25),
+            2: ($spacer * .5),
+            3: ($spacer * .75),
+            4: $spacer,
+            5: ($spacer * 1.25),
+            6: ($spacer * 1.5),
+            7: ($spacer * 1.75),
+            8: ($spacer * 2),
+            9: ($spacer * 2.25),
+            10: ($spacer * 2.5),
+            //20: ($spacer * 2.5),
+        ),
+        $spacers
+);
+
+//// Input
+$input-box-shadow:                      inset 0 1px 1px rgba(black, .075) !default;
+$input-transition:                      border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
+$input-font-size: 14px;
+
+//// Button
+$btn-font-size-sm: 14px;
+$btn-disabled-opacity: 0.5;
+
+
+// Links
+//
+// Style anchor elements.
+
+$link-color:                              $secondary !default;
+$link-decoration:                         none !default;
+$link-hover-color:                        darken($link-color, 15%) !default;
+$link-hover-decoration:                   none !default;
+// Darken percentage for links with `.text-*` class (e.g. `.text-success`)
+$emphasized-link-hover-darken-percentage: 15% !default;

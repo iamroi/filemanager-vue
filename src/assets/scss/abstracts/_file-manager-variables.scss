@@ -1,0 +1,58 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass variables.
+// -----------------------------------------------------------------------------
+
+//JUST BOOTSTRAP OVERRIDES
+@import './variables';
+
+$roi-breadcrumb-color: $gray-400;
+//$roi-breadcrumb-hover-color: $primary;
+$roi-breadcrumb-hover-color: $gray-800;
+
+$roi-input-btn-focus-width:       .2rem !default;
+$roi-input-btn-focus-color:       rgba($primary, .25) !default;
+
+$roi-link-color: $gray-800;
+$roi-link-hover-color: $primary;
+
+$roi-file-width: 250px;
+$roi-file-border-width: 2px;
+$roi-file-border-color: #eee;
+$roi-file-hover-border-color: $gray-100;
+$roi-file-selected-border-color: $primary;
+$roi-file-selected-bg-color: $primary;
+
+
+// FM Pagination
+$roi-pagination-color:                  $roi-link-color !default;
+$roi-pagination-bg:                     white !default;
+$roi-pagination-border-width:           1px !default;
+$roi-pagination-border-color:           $gray-300 !default;
+
+$roi-pagination-focus-box-shadow:       0 0 0 $roi-input-btn-focus-width $roi-input-btn-focus-color !default;
+$roi-pagination-focus-outline:          0 !default;
+
+$roi-pagination-hover-color:            white; //$roi-link-hover-color !default;
+$roi-pagination-hover-bg:               $gray-200 !default;
+$roi-pagination-hover-border-color:     $gray-300 !default;
+
+$roi-pagination-active-color:           white !default;
+$roi-pagination-active-bg:              $primary !default;
+$roi-pagination-active-border-color:    $roi-pagination-active-bg !default;
+
+$roi-pagination-disabled-color:         $gray-600 !default;
+$roi-pagination-disabled-bg:            white !default;
+$roi-pagination-disabled-border-color:  $gray-300 !default;
+
+//$filePreviewHeight: 60px;
+//$filePreviewPadding: 4px;
+//$filePreviewDiff: 2*($roi-file-border-width+$filePreviewPadding);
+//$filePreviewIconHeight: $filePreviewHeight - $filePreviewDiff;
+//$fileTitleHeight: 20px;
+////$fileHeight: $filePreviewHeight + $fileTitleHeight;
+//$fileHeight: 150px;
+//
+//$filesMargin: 5px;
+
+//// Button
+//$btn-font-size-sm: 20px;

@@ -1,0 +1,62 @@
+.z-file-manager {
+
+    .pagination {
+
+    }
+
+    .page-link {
+        background-color: $roi-pagination-bg;
+
+        &:hover {
+            color: $roi-pagination-hover-color;
+            text-decoration: none;
+            background-color: $roi-pagination-hover-bg;
+            border-color: $roi-pagination-hover-border-color;
+        }
+
+        &:focus {
+            outline: $roi-pagination-focus-outline;
+            box-shadow: $roi-pagination-focus-box-shadow;
+        }
+    }
+
+    .page-item {
+        &:first-child {
+            .page-link {
+                margin-left: 0;
+                @include border-left-radius($border-radius);
+            }
+        }
+        &:last-child {
+            .page-link {
+                @include border-right-radius($border-radius);
+            }
+        }
+
+        &.active .page-link {
+            color: $roi-pagination-active-color;
+            background-color: $roi-pagination-active-bg;
+            border-color: $roi-pagination-active-border-color;
+        }
+
+        &.disabled .page-link {
+            color: $roi-pagination-disabled-color;
+            background-color: $roi-pagination-disabled-bg;
+            border-color: $roi-pagination-disabled-border-color;
+        }
+    }
+
+
+    //
+    // Sizing
+    //
+
+    //.pagination-lg {
+    //    @include pagination-size($roi-pagination-padding-y-lg, $roi-pagination-padding-x-lg, $font-size-lg, $line-height-lg, $border-radius-lg);
+    //}
+    //
+    //.pagination-sm {
+    //    @include pagination-size($roi-pagination-padding-y-sm, $roi-pagination-padding-x-sm, $font-size-sm, $line-height-sm, $border-radius-sm);
+    //}
+
+}

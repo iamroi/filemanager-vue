@@ -1,0 +1,725 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+	EMAIL BUILDER STYLES
+========================================================================== */
+
+// 1. Configuration and helpers
+@import 'abstracts/file-manager-variables';
+//@import 'vue-full-screen-file-drop/dist/vue-full-screen-file-drop.css';
+
+// Booststrap
+// Just functions and variables
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+// Uncomment this for standalone library
+//@import "~bootstrap/scss/bootstrap"; // from bootstrap node_modules
+//@import '~bootstrap-vue/src/index.scss';
+
+@import 'fm-pagination';
+
+//.fm-drag-drop-overlay {
+//    position: absolute;
+//    top: 0;
+//    bottom: 0;
+//    left: 0;
+//    right: 0;
+//    z-index: 99999;
+//
+//    opacity: 0.95;
+//    background-color: $primary;
+//    border: 2px dashed;
+//}
+
+.z-file-manager {
+    .breadcrumb {
+        background: transparent;
+        //margin: 4px 0 20px 0;
+        margin: 0;
+        padding: 0;
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+
+            svg[data-icon="chevron-right"] {
+                margin-left: 10px;
+                margin-right: 10px;
+                font-size: 12px;
+            }
+
+            a {
+                //font-size: 14px;
+                color: $roi-breadcrumb-color;
+
+                &.home {
+                    svg[data-icon="circle"] {
+                        //color: $roi-breadcrumb-hover-color;
+                        //color: $gray-200;
+                        color: #eee;
+                    }
+
+                    font-size: 18px;
+                }
+
+                &:hover {
+                    color: $roi-breadcrumb-hover-color;
+                    text-decoration: none;
+
+                    &.home {
+                        font-size: 18px;
+
+                        svg[data-icon="circle"] {
+                            //color: $roi-breadcrumb-hover-color;
+                            color: $gray-500;
+                        }
+
+                        svg[data-icon="home"] {
+                            //color: $roi-breadcrumb-hover-color;
+                            color: $gray-100;
+                        }
+                    }
+                }
+
+            }
+
+            span.active {
+                color: $gray-300;
+                font-weight: 500;
+            }
+        }
+    }
+
+    .fm-sub-header {
+        .separator {
+            display: flex;
+            align-items: center;
+            margin: 0 10px;
+            font-size: 19px;
+            color: #aaa;
+        }
+    }
+    .file-actions-bulk {
+        button {
+            margin-right: 10px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+    }
+
+    .mm-content {
+        position: relative;
+        min-height: 400px;
+        //justify-content: center;
+        //align-items: center;
+        display: flex;
+        flex-direction: column;
+
+        #file-manager-dropzone {
+            display: none;
+        }
+
+        //#file-manager-dropzone {
+        //    position: absolute;
+        //    top: 0;
+        //    bottom: 0;
+        //    left: 0;
+        //    right: 0;
+        //    //display: none;
+        //    //height: 200px;
+        //    z-index: 1;
+        //    //border: 2px dashed;
+        //    display: flex;
+        //    align-items: center;
+        //    justify-content: center;
+        //    &.dz-drag-hover {
+        //        //opacity: 0.95;
+        //        //background-color: $primary;
+        //    }
+        //
+        //    .dz-message {
+        //        //width: 100%;
+        //        //height: 100%;
+        //    }
+        //}
+    }
+
+    .medias-widget {
+        //min-height: 400px;
+        //justify-content: center;
+        ////align-items: center;
+        //align-items: stretch;
+        //display: flex;
+
+        .medias {
+            display: flex;
+            flex-wrap: wrap;
+            //justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+
+            //margin: (-$filesMargin) (-$filesMargin) 15px (-$filesMargin);
+            //.file {
+            //    margin: $filesMargin;
+            //}
+            //min-height: 180px;
+            //min-height: 400px;
+
+            .medias-table {
+                thead {
+                    border-bottom: 2px solid $gray-200;
+                    th {
+                        color: $gray-200;
+                        font-size: 14px;
+                    }
+                }
+                tbody {
+                    tr {
+                        cursor: pointer;
+                        outline: none;
+                        &.b-table-row-selected {
+                            border-color: $roi-file-selected-border-color;
+                            background-color: rgba($roi-file-selected-bg-color, 0.1);
+                        }
+                    }
+                }
+
+                //.file .file-preview {
+                //    width: 130px;
+                //    position: relative;
+                //    display: flex;
+                //    align-items: center;
+                //    justify-content: center;
+                //    flex-direction: column;
+                //    background: rgba(0, 0, 0, 0.05);
+                //    margin-right: 15px;
+                //}
+            }
+        }
+
+        .medias-loading {
+            margin: 50px 0;
+        }
+    }
+
+    .file {
+        .file-delete-confirm.popover {
+            border: none;
+
+            &.bs-popover-top > .arrow::after,
+            &.bs-popover-auto[x-placement^="top"] > .arrow::after {
+                //border-top-color: $danger;
+                border-top-color: $gray-900;
+            }
+
+            .popover-body {
+                //padding: 0;
+                cursor: default;
+                background: $gray-900;
+                color: $gray-100;
+                font-size: 12px;
+                border-radius: 5px;
+
+                button {
+                    font-size: 12px;
+                }
+
+                .confirm-delete-wrapper {
+                    font-weight: 500;
+                }
+
+                a {
+                    text-decoration: none;
+                    //color: $gray-200;
+                    cursor: pointer;
+
+                    &.yes {
+                        color: red;
+                    }
+
+                    &.no {
+                        color: $gray-100;
+                    }
+
+                    &:hover {
+                        &.yes {
+                            //color: $danger;
+                            color: lighten(red, 6.5%) !important;
+                            //text-decoration: underline;
+                        }
+
+                        &.no {
+                            //color: $danger;
+                            color: lighten($gray-100, 10.5%) !important;
+                        }
+                    }
+                }
+            }
+
+            &:hover {
+                &.bs-popover-top > .arrow::after,
+                &.bs-popover-auto[x-placement^="top"] > .arrow::after {
+                    //border-top-color: darken($danger, 7.5%);
+                    border-top-color: lighten($gray-900, 7.5%);
+                }
+            }
+        }
+
+        .file-actions {
+            //display: none;
+            //position: absolute;
+            //top: 0;
+            //bottom: 0;
+            //left: 0;
+            //right: 0;
+            //text-align: center;
+            //margin-top: 10px;
+
+            //a {
+            //    &:hover {
+            //       color: $roi-link-hover-color;
+            //    }
+            //}
+
+            //align-items-end flex-grow-1 justify-content-between
+            display: flex;
+            align-items: flex-end;
+            flex: 1;
+            justify-content: space-between;
+            a {
+                margin-left: 8px;
+                outline: none;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                &.file-delete {
+                    &:hover,
+                    &:focus {
+                        svg {
+                            color: $red;
+                        }
+                    }
+                }
+            }
+        }
+
+        .file-title {
+            word-break: break-all;
+            white-space: pre-wrap;
+            font-size: 14px;
+            font-weight: 500;
+            color: $gray-400;
+            //position: absolute;
+            //height: 20px;
+            //right: 0;
+            //bottom: 0;
+            //left: 0;
+            //overflow: hidden;
+            //background-color: $roi-file-border-color;
+            //transition: background-color 0.4s;
+            //
+            //h3 {
+            //    color: #000;
+            //    margin: 0 4px;
+            //    line-height: $fileTitleHeight;
+            //    font-size: $fileTitleHeight/2;
+            //    transition: color 0.4s;
+            //}
+        }
+
+        &--grid {
+            display: flex;
+            //position: relative;
+            //float: left;
+            //width: $roi-file-width;
+            //height: $fileHeight;
+            //width: 100%;
+            margin-bottom: 30px;
+            height: 150px;
+            cursor: pointer;
+            //border: $roi-file-border-width solid $roi-file-border-color;
+            border: 1px solid #DDDDDD;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07);
+            //transition: border-color 0.4s;
+            transition: box-shadow 0.5s;
+            overflow: hidden;
+            padding: 10px;
+
+            &:hover {
+                //border-color: $roi-file-hover-border-color;
+                //box-shadow: 0 1px 4px 1px rgba(0,0,0,.07);
+                transition: box-shadow 0.5s;
+                box-shadow: 0 1px 10px rgba(0, 0, 0, 0.17) !important;
+            }
+
+            &.selected {
+                border-color: $roi-file-selected-border-color;
+                background-color: rgba($roi-file-selected-bg-color, 0.05);
+
+                .file-title {
+                    //background-color: $roi-file-selected-border-color;
+                    h3 {
+                        //color: #fff;
+                    }
+                }
+            }
+
+
+            .file-preview {
+                //padding: 4px;
+                width: 130px;
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                background: rgba(0, 0, 0, .05);
+                margin-right: 15px;
+
+                &.dir {
+                    svg.folder-open {
+                        display: none;
+                    }
+
+                    &:hover {
+                        background: rgba(0, 0, 0, .1);
+                        //svg.folder {
+                        //    display: none;
+                        //}
+                        //svg.folder-open {
+                        //    display: block;
+                        //}
+                    }
+                }
+
+                .thumb {
+                    //width: 100%;
+                    max-width: 100%;
+                    max-height: 100%;
+                    //margin-top: -(($roi-file-width - $filePreviewHeight)/2);
+                }
+
+                .icon {
+                    text-align: center;
+                    //line-height: $filePreviewIconHeight;
+                    //font-size: ($filePreviewIconHeight) / 1.3;
+                    .fa {
+                        vertical-align: middle;
+                    }
+
+                    &.dir {
+                        //font-size: 75px;
+                    }
+                }
+            }
+
+            //.file-no-title {
+            //    .icon {
+            //        line-height: $fileHeight - $filePreviewDiff;
+            //    }
+            //}
+
+
+
+            /*
+                .file:hover, .file:focus, .file.selected {
+                    .file-actions {
+                        display: block;
+                    }
+                }
+                */
+
+            .file-details {
+                flex: 1;
+            }
+
+            .file-meta {
+                display: flex;
+                align-items: center;
+                font-size: 12px;
+                margin-top: 3px;
+                color: $gray-300;
+
+                svg[data-icon="circle"] {
+                    font-size: 4px;
+                    margin: 0 4px;
+                    color: #aaa;
+                }
+            }
+        }
+
+        // file--list
+        &--list {
+            color: $gray-400;
+            font-size: 14px;
+            //border-color: $gray-400;
+
+            td {
+                border-top: 1px solid $gray-200;
+            }
+            .file-preview {
+                width: 40px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                img.thumb {
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+            }
+
+            .file-actions {
+                align-items: flex-end;
+                flex: 1;
+                justify-content: flex-end;
+                &__quick {
+                    //display: none;
+                    visibility: hidden;
+                }
+                .btn-choose {
+                    margin-left: 16px;
+                }
+            }
+
+            //tr {
+                &:hover {
+                    .file-actions {
+                        &__quick {
+                            //display: flex;
+                            visibility: visible;
+                        }
+                    }
+                }
+            //}
+        }
+    }
+
+    .medias {
+
+    }
+
+    .context-menu {
+        position: absolute;
+        background-color: #fff;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+        z-index: 100;
+
+        ul {
+            padding-left: 0;
+            margin-bottom: 0;
+            list-style: none;
+        }
+
+        li {
+            display: block;
+
+            a {
+                display: block;
+                padding: 6px 15px;
+                font-weight: normal;
+                color: #333;
+                text-decoration: none;
+                white-space: nowrap;
+
+                &:hover {
+                    background-color: #eee;
+                }
+            }
+        }
+    }
+
+    // UPLOAD STATUS
+    .dz-upload-status {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin: 15px 0;
+
+        &__title {
+
+        }
+
+        &__subtitle {
+
+        }
+
+        hr {
+
+        }
+
+        &__item {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-top: 15px;
+
+            .thumbnail {
+                display: flex;
+                align-items: center;
+                width: 50px;
+                height: 50px;
+                background-color: #ddd;
+                margin-right: 10px;
+
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+
+            .progress {
+                width: 100%;
+            }
+        }
+    }
+
+
+    //.panel-modal {
+    //    position: absolute;
+    //    top: 0;
+    //    bottom: 0;
+    //    left: 0;
+    //    right: 0;
+    //    z-index: 100;
+    //    background-color: rgba(0, 0, 0, 0.5);
+    //
+    //    .panel {
+    //        position: absolute;
+    //        top: 0;
+    //        bottom: 0;
+    //        left: 0;
+    //        right: 0;
+    //        margin: 15px;
+    //        overflow: auto;
+    //    }
+    //
+    //    .panel-heading {
+    //        font-size: 14px;
+    //        font-weight: bold;
+    //    }
+    //
+    //    .panel-body {
+    //        position: absolute;
+    //        bottom: 0;
+    //        top: 41px;
+    //        left: 0;
+    //        right: 0;
+    //        overflow: auto;
+    //    }
+    //}
+
+    .btn {
+        //border-radius: 0;
+        &-bulk-delete {
+            padding: 0 12px;
+        }
+    }
+
+    a,
+    a:not([href]):not([tabindex]),
+    a:not([href]):not([tabindex]) {
+        color: $roi-link-color;
+
+        &:hover {
+            color: $roi-link-hover-color;
+        }
+    }
+
+    // FORM  ELEMENTS
+    input.form-control {
+        border-color: $gray-200;
+        background-color: white;
+        color: $gray-700;
+        //font-size: 12px;
+        //padding: 0;
+        &:focus {
+            //border-color: $gray-100;
+            background-color: white;
+            color: $gray-700;
+        }
+
+    }
+
+    .form-group {
+        &.has-icon {
+            position: relative;
+            input.form-control {
+                padding-right: 2.275rem;
+            }
+
+            .form-control-feedback {
+                position: absolute;
+                text-align: center;
+                //pointer-events: none;
+                color: #aaa;
+                top: 0;
+                height: 100%;
+                right: 0;
+                display: flex;
+                align-items: center;
+                margin: 0 10px;
+                &:hover {
+                    //color: $primary;
+                }
+
+                svg {
+                    &:hover {
+                        cursor: pointer;
+                        color: $primary;
+                    }
+                }
+            }
+        }
+    }
+
+
+    /* Bootstrap 4 text input with search icon */
+
+
+
+    // FULL SCREEN FILE DROP
+    .vue-full-screen-file-drop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10000;
+        width: 100%;
+        height: 100%;
+        //background-color: rgba(0,0,0,.4);
+        background-color: rgba($primary, .9);
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility .2s,opacity .2s
+    }
+    .vue-full-screen-file-drop--visible {
+        opacity: 1;
+        visibility: visible
+    }
+    .vue-full-screen-file-drop__content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        color: #fff;
+        font-size: 4em
+    }
+    .vue-full-screen-file-drop__content:before {
+        border: 5px dashed #fff;
+        content: "";
+        bottom: 60px;
+        left: 60px;
+        position: absolute;
+        right: 60px;
+        top: 60px
+    }
+}
