@@ -1,7 +1,7 @@
 import { Module, VuexModule, getModule, Action, Mutation, MutationAction } from 'vuex-module-decorators'
 import axios, { AxiosInstance } from 'axios'
-import Vue from 'vue'
-import _ from 'lodash'
+// import Vue from 'vue'
+// import _ from 'lodash'
 // import {
 //     FM_SET_OPTIONS, FM_SET_API, FM_SET_PATH, FM_SET_FILES, FM_DELETE_FILES, FM_RESET_SELECTED,
 //     // FM_SET_DROPZONE_REF,
@@ -10,7 +10,8 @@ import _ from 'lodash'
 //     FM_ADD_SELECTED, FM_REMOVE_SELECTED, FM_TOGGLE_SELECTED, FM_SET_DELETING
 // } from "@/utils/file-manager-mutation-types";
 
-import * as FM from '@/utils/file-manager-mutation-types'
+// import * as FM from '../../utils/file-manager-mutation-types'
+import * as FM from '../../utils/mutation-types'
 
 // import {IMjmlElement} from "~/store/email-builder";
 // import {ISelectedElement} from "~/store/email-builder";

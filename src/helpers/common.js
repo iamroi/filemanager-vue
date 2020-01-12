@@ -1,9 +1,11 @@
+import isString from 'lodash/isString'
+import has from 'lodash/has'
 
 export function getErrorFromResponse (err, defaultMsg = '') {
   let errMessage = defaultMsg
   // // let errMessage = "Sorry, we couldn't delete some files. Please try again later.";
-  // errMessage = _.has(err, 'response.data.error.message') ? err.response.data.error.message : errMessage;
-  // errMessage = _.has(err, 'response.data.message') ? err.response.data.message : errMessage;
+  // errMessage = has(err, 'response.data.error.message') ? err.response.data.error.message : errMessage;
+  // errMessage = has(err, 'response.data.message') ? err.response.data.message : errMessage;
   // errMessage = Array.isArray(errMessage) ? errMessage[0] : errMessage;
 
   let errMessages = getErrorsFromResponse(err)
@@ -21,15 +23,15 @@ export function getErrorsFromResponse (response) { //, defaultMsg = ''
   console.log(response)
 
   // order by least to best
-  let error = _.isString(response) ? response : '' // response;
-  error = _.has(response, 'exception') ? response.exception : error
-  error = _.has(response, 'message') ? response.message : error
-  error = _.has(response, 'error') ? response.error : error
-  error = _.has(response, 'error.message') ? response.error.message : error
+  let error = isString(response) ? response : '' // response;
+  error = has(response, 'exception') ? response.exception : error
+  error = has(response, 'message') ? response.message : error
+  error = has(response, 'error') ? response.error : error
+  error = has(response, 'error.message') ? response.error.message : error
 
   let errMessages = Array.isArray(error)
     ? error
-    : _.isString(error)
+    : isString(error)
       ? [error]
       : []
 

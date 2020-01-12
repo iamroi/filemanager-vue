@@ -7,6 +7,7 @@ import { fileManager as fileManagerStore } from './store/modules/file-manager'
 // import {getModule} from "vuex-module-decorators";
 import vueFilterPrettyBytes from 'vue-filter-pretty-bytes'
 import vueDebounce from 'vue-debounce'
+import customBootstrapVue from './plugins/bootstrap-vue'
 
 declare global {
     interface Window {
@@ -22,6 +23,8 @@ const install = (Vue, config) => {
     if (!config.fmApi) {
         throw new Error('Roi File Manager: Please provide file manager api endpoints.')
     }
+
+    Vue.use(customBootstrapVue)
 
     // console.dir(fileManagerStore(config))
     // register your own vuex module
@@ -43,9 +46,10 @@ if (
     typeof window !== 'undefined' &&
     window.Vue &&
     // @ts-ignore
-    // window.Vue === Vue
-    'Vue' in window
+    window.Vue === Vue
+    // 'Vue' in window
 ) {
+    // @ts-ignore
     window.Vue.component('file-manager', FileManager)
 }
 

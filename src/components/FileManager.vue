@@ -251,8 +251,12 @@
 </template>
 
 <script>
-import Vue from 'vue'
+// import Vue from 'vue'
 import { mapState } from 'vuex'
+import cloneDeep from 'lodash/cloneDeep'
+import merge from 'lodash/merge'
+// import has from 'lodash/has'
+// import extend from 'lodash/extend'
 // import FileManagerApi from '../file-manager-api.js';
 // import { fileManager as fileManagerStore } from '../store/modules/file-manager'
 
@@ -405,7 +409,7 @@ export default {
 
     overrideOptions () {
       // return Object.assign(defaultOptions, this.options)
-      // // return _.extend(defaultOptions, this.options);
+      // // return extend(defaultOptions, this.options);
 
       return { ...defaultOptions, ...this.options }
     },
@@ -466,7 +470,7 @@ export default {
   created () {
     // console.log(this.$fileManager)
     // this.options = { ...defaultOptions, ...this.opts };
-    this.options = _.merge(defaultOptions, this.opts)
+    this.options = merge(defaultOptions, this.opts)
     // console.log(this.options);
     // Object.assign(this.options, defaultOptions, this.opts);
     // console.log(defaultOptions)
@@ -718,12 +722,12 @@ export default {
         // let errMessage = deleteErr.response && deleteErr.response.data && deleteErr.response.data.error ?
         //     deleteErr.response.data.error.message :
         //     "Sorry, we couldn't delete some files. Please try again later.";
-        // let errMessage = _.has(err, 'response.data.error.message') ?
+        // let errMessage = has(err, 'response.data.error.message') ?
         //     err.response.data.error.message :
         //     "Sorry, we couldn't delete some files. Please try again later.";
         let errMessage = getErrorFromResponse(err, "Sorry, we couldn't delete some files. Please try again later.")
-        // errMessage = _.has(err, 'response.data.error.message') ? err.response.data.error.message : errMessage;
-        // errMessage = _.has(err, 'response.data.message') ? err.response.data.message : errMessage;
+        // errMessage = has(err, 'response.data.error.message') ? err.response.data.error.message : errMessage;
+        // errMessage = has(err, 'response.data.message') ? err.response.data.message : errMessage;
         // errMessage = Array.isArray(errMessage) ? errMessage[0] : errMessage;
 
         this.$bvToast.toast(errMessage, {
@@ -759,7 +763,7 @@ export default {
 
       this.$refs.medias.selectAll()
 
-      this.$fileManager.setSelected(_.cloneDeep(this.files))
+      this.$fileManager.setSelected(cloneDeep(this.files))
 
       // this.files.forEach(file => {
       //     this.$fileManager.addSelected(file)
