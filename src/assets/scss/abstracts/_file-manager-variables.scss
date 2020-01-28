@@ -6,8 +6,8 @@
 @import './variables';
 
 $roi-breadcrumb-color: $gray-400;
-//$roi-breadcrumb-hover-color: $primary;
-$roi-breadcrumb-hover-color: $gray-800;
+$roi-breadcrumb-hover-color: $primary;
+//$roi-breadcrumb-hover-color: $gray-800;
 
 $roi-input-btn-focus-width:       .2rem !default;
 $roi-input-btn-focus-color:       rgba($primary, .25) !default;
@@ -21,6 +21,9 @@ $roi-file-border-color: #eee;
 $roi-file-hover-border-color: $gray-100;
 $roi-file-selected-border-color: $primary;
 $roi-file-selected-bg-color: $primary;
+
+// Dropdown
+$roi-dropdown-item-hover-bg: $primary;
 
 
 // FM Pagination

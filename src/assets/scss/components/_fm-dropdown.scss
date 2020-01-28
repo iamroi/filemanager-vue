@@ -1,0 +1,18 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the dropdown component.
+// -----------------------------------------------------------------------------
+.roi-file-manager {
+  .dropdown-menu {
+    //background-color: $gray-base;
+    //border: 1px solid $roi-input-border;
+    .dropdown-item {
+      //color: $zeb-sidebar-text;
+      //font-size: 14px;
+      //padding: 0.25rem 1.0rem;
+      &:hover {
+        background-color: $roi-dropdown-item-hover-bg;
+        color: $gray-100;
+      }
+    }
+  }
+}

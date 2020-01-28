@@ -3,37 +3,37 @@
 // -----------------------------------------------------------------------------
 
 // Bootstrap Overrides
-$enable-rounded: true;
-//$enable-shadows: true;
-$enable-transitions: true;
-$enable-prefers-reduced-motion-media-query:   true;
+$enable-rounded: true !default;
+//$enable-shadows: true !default;
+$enable-transitions: true !default;
+$enable-prefers-reduced-motion-media-query:   true !default;
 
 // Custom Bootstrap Colors
-$red:        #D04762;
-$yellow:     #F6D87B;
-$green:      #58CA80;
+$red:        #D04762 !default;
+$yellow:     #F6D87B !default;
+$green:      #58CA80 !default;
 
-$gray-base: #111720;
-$gray-100:  #E5ECF9;
-$gray-200:  #99A4B9;
-$gray-300:  #6A7484;
-$gray-400:  #3F4656;
-$gray-500:  #2F3646;
-$gray-600:  #242837;
-$gray-700:  #1F2332;
-$gray-800:  #181C29;
-$gray-900:  #161B24;
+$gray-base: #111720 !default;
+$gray-100:  #E5ECF9 !default;
+$gray-200:  #99A4B9 !default;
+$gray-300:  #6A7484 !default;
+$gray-400:  #3F4656 !default;
+$gray-500:  #2F3646 !default;
+$gray-600:  #242837 !default;
+$gray-700:  #1F2332 !default;
+$gray-800:  #181C29 !default;
+$gray-900:  #161B24 !default;
 
-$primary: #22C4F8;
-$primary-light: #22C4F8;
-$secondary: #5629EE;
+$primary: #22C4F8 !default;
+$primary-light: #22C4F8 !default;
+$secondary: #5629EE !default;
 
 
-$success:       $green;
-//$info:          $light-blue;
-$info:          $secondary;
-$warning:       $yellow;
-$danger:        $red;
+$success:       $green !default;
+//$info:          $light-blue !default;
+$info:          $secondary !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
 
 $theme-colors: ();
 $theme-colors: map-merge(
@@ -50,8 +50,8 @@ $theme-colors: map-merge(
         $theme-colors
 );
 
-$spacer: 1rem;
-$spacers: ();
+$spacer: 1rem !default;
+$spacers: () !default;
 $spacers: map-merge(
         (
             0: 0,
@@ -73,11 +73,11 @@ $spacers: map-merge(
 //// Input
 $input-box-shadow:                      inset 0 1px 1px rgba(black, .075) !default;
 $input-transition:                      border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
-$input-font-size: 14px;
+$input-font-size: 14px !default;
 
 //// Button
-$btn-font-size-sm: 14px;
-$btn-disabled-opacity: 0.5;
+$btn-font-size-sm: 14px !default;
+$btn-disabled-opacity: 0.5 !default;
 
 
 // Links

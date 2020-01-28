@@ -1,5 +1,5 @@
 import { Module, VuexModule, getModule, Action, Mutation, MutationAction } from 'vuex-module-decorators'
-import axios, { AxiosInstance } from 'axios'
+import { AxiosInstance } from 'axios'
 // import Vue from 'vue'
 // import _ from 'lodash'
 // import {
@@ -19,13 +19,14 @@ import * as FM from '../../utils/mutation-types'
 import to from 'await-to-js'
 import { Store } from 'vuex'
 
-// import { fmApi } from '@/components/zeb-settings.js'
+// import { this.api } from '@/components/zeb-settings.js'
 // import { $axios } from '@/utils/api'
 // import store from "@/store";
 
 // import {Store} from "vuex"; // use the vue plugin passed store
 
 export interface IFileManagerApi {
+    // baseUrl: string
     listUrl: string
     uploadUrl: string
     folderUrl: string
@@ -35,15 +36,9 @@ export interface IFileManagerApi {
 
 export interface IFileManagerOptions {
     multipleSelection?: boolean
-    basePath?: string
+    basePath?: string // todo remove duplicate?
     path?: string
-    api?: {} | {
-        baseUrl: string | null
-        listUrl: string | null
-        downloadUrl: string | null
-        uploadUrl: string | null
-        options: {}
-    }
+    api?: IFileManagerApi
     input?: string
     onCreated?: null
     onMounted?: null
@@ -70,21 +65,25 @@ export interface IFileManagerFile {
 
 export interface IFileManagerModuleConfig {
     store: Store<any>
-    axios?: AxiosInstance
-    fmApi: IFileManagerApi
+    axios: AxiosInstance
+    // fmApi: IFileManagerApi
+    stateFactory?: boolean;
 }
 
 export const fileManager = (config: IFileManagerModuleConfig) => {
-    const $axios = config.axios ? config.axios : axios.create()
+    const $axios = config.axios
+    // const $axios = config.axios ? config.axios : axios.create()
     const store = config.store
-    const fmApi = config.fmApi
-    // console.log($axios)
+    // const this.api = config.this.api
+    // console.dir(config.axios)
+    const stateFactory = !!config.stateFactory
+    // console.log(stateFactory)
 
     @Module({
         namespaced: true,
         dynamic: true,
         store,
-        // stateFactory: false,
+        stateFactory: stateFactory,
         name: 'file-manager'
     })
     class FileManager extends VuexModule {
@@ -116,7 +115,7 @@ export const fileManager = (config: IFileManagerModuleConfig) => {
 
         files: IFileManagerFile[] | [] = []
 
-        api: any = fmApi
+        // api: any = {} // this.api
 
         loading: boolean = false
 
@@ -145,6 +144,14 @@ export const fileManager = (config: IFileManagerModuleConfig) => {
             return 0
         }
 
+        get api () {
+            return (this.options && this.options.api) ? this.options.api : null // todo send default?
+        }
+
+        get canUpload () {
+            return this.options && this.options.api && this.options.api.uploadUrl === '' ? false : true
+        }
+
         @Mutation
         private [FM.FM_SET_OPTIONS] (payload) {
             this.options = payload
@@ -154,7 +161,7 @@ export const fileManager = (config: IFileManagerModuleConfig) => {
         // private [FM.FM_SET_API] (payload) {
         //     // console.log('wegwegweg')
         //     // console.log(payload)
-        //     this.api = payload;
+        //     this.api = payload
         // }
 
         // @Mutation
@@ -306,7 +313,7 @@ export const fileManager = (config: IFileManagerModuleConfig) => {
         @Action({ rawError: true })
         async refresh (payload: any = null) {
             // if(this.api === null) return [new DOMException('API is not set'), null];
-            if (fmApi.listUrl === '') return [new DOMException('API listUrl is not set'), null]
+            if (!this.api || !this.api.listUrl) return [new DOMException('API listUrl is not set'), null]
 
             payload = payload || { showLoadinIndicator: true }
 
@@ -314,8 +321,10 @@ export const fileManager = (config: IFileManagerModuleConfig) => {
                 this.context.commit(FM.FM_SET_LOADING, true)
             }
 
+            // console.dir($axios)
+            // console.dir(this.api)
             // const [err, response] = await to(this.api.list(this.path, this.search, this.currentPage, this.perPage))
-            const [err, response] = await to($axios.get(fmApi.listUrl, {
+            const [err, response] = await to($axios.get(this.api.listUrl, {
                 params: {
                     path: this.path,
                     search: this.search,
@@ -409,7 +418,7 @@ export const fileManager = (config: IFileManagerModuleConfig) => {
         @Action
         async newFolder (payload) {
             // if(this.api === null) return [new DOMException('API is not set'), null];
-            if (fmApi.folderUrl === '') return [new DOMException('API folderUrl is not set'), null]
+            if (!this.api || !this.api.folderUrl) return [new DOMException('API folderUrl is not set'), null]
 
             payload = Array.isArray(payload) ? payload : [payload]
 
@@ -426,7 +435,7 @@ export const fileManager = (config: IFileManagerModuleConfig) => {
             // let conf = this.computeConfig(config);
 
             // console.log($axios)
-            const [err, response] = await to($axios.post(fmApi.folderUrl, bodyFormData))
+            const [err, response] = await to($axios.post(this.api.folderUrl, bodyFormData))
             // const [err, response] = await (this.api.newFolder(payload))
 
             // console.log(err)
@@ -446,12 +455,12 @@ export const fileManager = (config: IFileManagerModuleConfig) => {
         @Action
         async deleteFiles (payload) {
             // if(this.api === null) return [new DOMException('API is not set'), null];
-            if (fmApi.deleteUrl === '') return [new DOMException('API deleteUrl is not set'), null]
+            if (!this.api || !this.api.deleteUrl) return [new DOMException('API deleteUrl is not set'), null]
 
             payload = Array.isArray(payload) ? payload : [payload]
 
             // console.log(payload)
-            const [err, response] = await to($axios.delete(fmApi.deleteUrl, { params: { path: payload } }))
+            const [err, response] = await to($axios.delete(this.api.deleteUrl, { params: { path: payload } }))
             // const [err, response] = await to(this.api.delete(payload))
             // const [err, response] = await (this.api.delete(payload))
 
@@ -538,6 +547,6 @@ export const fileManager = (config: IFileManagerModuleConfig) => {
         }
     }
     // export const fileManager = getModule(FileManager)
-    return getModule(FileManager)
+    return getModule(FileManager, store)
     // return (FileManager)
 }

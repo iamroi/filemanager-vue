@@ -18,7 +18,8 @@
 //@import "~bootstrap/scss/bootstrap"; // from bootstrap node_modules
 //@import '~bootstrap-vue/src/index.scss';
 
-@import 'fm-pagination';
+@import 'components/fm-dropdown';
+@import 'components/fm-pagination';
 
 //.fm-drag-drop-overlay {
 //    position: absolute;
@@ -74,13 +75,15 @@
                         font-size: 18px;
 
                         svg[data-icon="circle"] {
-                            //color: $roi-breadcrumb-hover-color;
-                            color: $gray-500;
+                          //color: white;
+                          color: lighten($roi-breadcrumb-hover-color, 40%);
+                            //color: $gray-500;
                         }
 
                         svg[data-icon="home"] {
-                            //color: $roi-breadcrumb-hover-color;
-                            color: $gray-100;
+                          //color: white;
+                            color: $roi-breadcrumb-hover-color;
+                            //color: $gray-100;
                         }
                     }
                 }

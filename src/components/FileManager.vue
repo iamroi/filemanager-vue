@@ -1,6 +1,6 @@
 <template>
-    <div class="z-file-manager media-manager" :id="id">
-        <div class="mm" :class="{ 'mm-fixed-height': options.height }" :style="options.height ? 'height:'+options.height : ''">
+    <div class="z-file-manager roi-file-manager media-manager" :id="id">
+        <div class="mm" :class="{ 'mm-fixed-height': fmOptions.height }" :style="fmOptions.height ? 'height:'+fmOptions.height : ''">
 
             <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
                 <details-widget
@@ -30,7 +30,7 @@
                     </notification-widget>
 
                     <div class="fm-sub-header d-flex justify-content-between">
-                        <ol v-if="options.showBreadcrumb" class="breadcrumb flex-grow-1">
+                        <ol v-if="fmOptions.showBreadcrumb" class="breadcrumb flex-grow-1">
                             <li class="breadcrumb-item--" v-for="(item, i) in breadcrumb" :key="i">
     <!--                            v-html="item.label"-->
                                 <template v-if="item.path !== ''">
@@ -95,14 +95,14 @@
                             <a class="d-flex align-items-center mr-2" ref="" href="javascript:void(0);"
                                @click="onSwitchView('grid')"
                             >
-                                <img src="@/assets/images/fileManager/grid-view.svg" alt="">
+                                <img src="~$mtbsrc/assets/images/fileManager/grid-view.svg" alt="">
 <!--                                <font-awesome-icon :icon="['fas', 'th']"/>-->
                             </a>
 
                             <a class="d-flex align-items-center " ref="" href="javascript:void(0);"
                                @click="onSwitchView('list')"
                             >
-                                <img src="@/assets/images/fileManager/list-view.svg" alt="">
+                                <img src="~$mtbsrc/assets/images/fileManager/list-view.svg" alt="">
 
                                 <!--                                <font-awesome-layers class="d-flex justify-content-center button-block-svg-layer fa-lg fa-fw text-dark"-->
 <!--                                                     style="    font-size: 20px;"-->
@@ -186,32 +186,34 @@
 <!--                        ></upload-widget>-->
 
 <!--                        @vdropzone-files-added="onDropzoneFileAdded"-->
-                        <vue2-dropzone
-                            :id="`file-manager-dropzone`"
-                            :class="[isDragging ? 'active' : '']"
-                            ref="fileManagerDropzone"
-                            :options="options.dropzoneOptions"
-                            :useCustomSlot="true"
-                            :include-styling="false"
-                            @vdropzone-drag-start="onDropzoneDragStart"
-                            @vdropzone-drag-end="onDropzoneDragEnd"
-                            @vdropzone-drag-enter="onDropzoneDragEnter"
-                            @vdropzone-drag-leave="onDropzoneDragLeave"
-                            @vdropzone-drop="onDropzoneDrop"
-                            @vdropzone-file-added="onDropzoneFileAdded"
-                            @vdropzone-sending="onDropzoneSending"
-                            @vdropzone-upload-progress="onDropzoneProgress"
-                            @vdropzone-queue-complete="onDropzoneQueueComplete"
-                            @vdropzone-error="onDropzoneError"
-                            @vdropzone-error-multiple="onDropzoneErrorMultiple"
-                            @vdropzone-complete-multiple="onDropzoneCompleteMultiple"
-                            @vdropzone-success="onDropzoneSuccess"
-                        >
+                        <template v-if="fmOptions.dropzone.url">
+                            <vue2-dropzone
+                                :id="`file-manager-dropzone`"
+                                :class="[isDragging ? 'active' : '']"
+                                ref="fileManagerDropzone"
+                                :options="fmOptions.dropzone"
+                                :useCustomSlot="true"
+                                :include-styling="false"
+                                @vdropzone-drag-start="onDropzoneDragStart"
+                                @vdropzone-drag-end="onDropzoneDragEnd"
+                                @vdropzone-drag-enter="onDropzoneDragEnter"
+                                @vdropzone-drag-leave="onDropzoneDragLeave"
+                                @vdropzone-drop="onDropzoneDrop"
+                                @vdropzone-file-added="onDropzoneFileAdded"
+                                @vdropzone-sending="onDropzoneSending"
+                                @vdropzone-upload-progress="onDropzoneProgress"
+                                @vdropzone-queue-complete="onDropzoneQueueComplete"
+                                @vdropzone-error="onDropzoneError"
+                                @vdropzone-error-multiple="onDropzoneErrorMultiple"
+                                @vdropzone-complete-multiple="onDropzoneCompleteMultiple"
+                                @vdropzone-success="onDropzoneSuccess"
+                            >
 
-                            <!--                            <div class="font-weight-bold text-white">-->
-<!--                                Drag and drop here!-->
-<!--                            </div>-->
-                        </vue2-dropzone>
+                                <!--                            <div class="font-weight-bold text-white">-->
+    <!--                                Drag and drop here!-->
+    <!--                            </div>-->
+                            </vue2-dropzone>
+                        </template>
 
                         <files-widget
                             :path="path"
@@ -241,6 +243,10 @@
             </div>
         </div>
 <!--        <drag-overlay></drag-overlay>-->
+
+        <template v-if="fmOptions.dropzone.url">
+
+        </template>
         <VueFullScreenFileDrop @drop='onFullPageFileDrop'>
             <div class='vue-full-screen-file-drop__content'>
                 Drag and drop here!
@@ -259,6 +265,7 @@ import merge from 'lodash/merge'
 // import extend from 'lodash/extend'
 // import FileManagerApi from '../file-manager-api.js';
 // import { fileManager as fileManagerStore } from '../store/modules/file-manager'
+import { defaultOptions } from '../utils/fm-settings.js'
 
 import UploadWidget from './UploadWidget.vue'
 import UploadStatusWidget from './UploadStatusWidget.vue'
@@ -272,10 +279,10 @@ import vue2Dropzone from 'vue2-dropzone'
 // import vue2Dropzone from '@/components/vue-dropzone-master/src/index.js'
 // import vue2Dropzone from '@/components/vue-dropzone-master/src/components/vue-dropzone.vue'
 import VueFullScreenFileDrop from 'vue-full-screen-file-drop'
-import VueLadda from '@/components/vue-ladda/vue-ladda.vue'
+import VueLadda from './vue-ladda/vue-ladda.vue'
 // import 'vue-full-screen-file-drop/dist/vue-full-screen-file-drop.css';
 import vueDebounce from 'vue-debounce'
-import { getErrorFromResponse } from '@/helpers/common'
+import { getErrorFromResponse } from '../helpers/common'
 
 // Vue.use(vueDebounce)
 // import DragOverlay from './DragOverlay.vue';
@@ -286,46 +293,7 @@ import { getErrorFromResponse } from '@/helpers/common'
 
 // Vue.use(require('vue-moment'))
 
-const defaultOptions = {
-  basePath: '',
-  path: '',
-  api: {
-    baseUrl: null,
-    listUrl: null,
-    downloadUrl: null,
-    uploadUrl: null,
-    deleteUrl: null,
-    options: {}
-  },
-  // input: '',
-  multipleSelection: true,
-  onCreated: null, // todo
-  onMounted: null, // todo
-  onSelect: null, // todo
-  onChoose: null, // todo
-  showBreadcrumb: true,
-  height: null,
-  // vue: Vue,
-  asVueComponenet: false,
-  dropzoneOptions: {
-    // previewsContainer: false,
-    // onBody: true,
-    previewsContainer: false,
-    url: null,
-    headers: {},
-    uploadMultiple: false,
-    clickable: false,
-    maxFilesize: 2,
-    thumbnailWidth: 200,
-    addRemoveLinks: true,
-    acceptedFiles: '.jpg, .jpeg, .png, .gif',
-    dictDefaultMessage: "<i class='fa fa-cloud-upload'></i> UPLOAD ME",
-    dictInvalidFileType: 'Sorry, this file type is not supported.'
-  },
-}
-
 export default {
-  props: ['id', 'opts'],
   components: {
     FilesWidget,
     UploadWidget,
@@ -339,13 +307,25 @@ export default {
     VueLadda,
     // DragOverlay
   },
+  props: {
+    id: {
+      type: String,
+      // default: () => fmOptionsDefault
+      default: null // () => {}
+    },
+    options: {
+      type: Object,
+      // default: () => fmOptionsDefault
+      default: () => {}
+    },
+  },
   data () {
     // console.log(this.$fileManager.options)
     return {
       // path: this.$store.state.options.basePath,
       // path: this.$fileManager.options.basePath,
       api: {},
-      options: {},
+      // options: {},
 
       dropzone: null,
       isDragging: false,
@@ -373,6 +353,7 @@ export default {
   computed: {
     ...mapState({
       // options: state => state.options,
+      fmOptions: state => state['file-manager'].options,
       basePath: state => state['file-manager'].options.basePath,
       path: state => state['file-manager'].path,
       files: state => state['file-manager'].files,
@@ -407,12 +388,12 @@ export default {
       }
     },
 
-    overrideOptions () {
-      // return Object.assign(defaultOptions, this.options)
-      // // return extend(defaultOptions, this.options);
-
-      return { ...defaultOptions, ...this.options }
-    },
+    // overrideOptions () {
+    //   // return Object.assign(defaultOptions, this.options)
+    //   // // return extend(defaultOptions, this.options);
+    //
+    //   return { ...defaultOptions, ...this.options }
+    // },
     // input () {
     //   /*
     //         * Input options ?
@@ -422,6 +403,9 @@ export default {
     //   }
     //   return this._input
     // },
+    canUpload () {
+      return this.fmOptions.dropzone.url !== null & this.fmOptions.dropzone.url !== ''
+    },
     relPath () {
       return this.path.replace(this.basePath, '')
     },
@@ -468,11 +452,24 @@ export default {
     },
   },
   created () {
+    // this.$fileManager.setOptions(this.options)
+    const mergedOptions = merge(cloneDeep(defaultOptions), this.options)
+    mergedOptions.dropzone.url = mergedOptions.api.uploadUrl // set the dropzone url from api option
+
+    this.$fileManager.setOptions(mergedOptions)
+    console.dir(mergedOptions)
+    // this.$fileManager.setOptions(this.$fmOptions)
+    // this.$fileManager.setApi(this.$fmOptions)
+
+    // Vue.prototype.$fmOptions = merge(cloneDeep(defaultOptions), this.options)
+    // console.log('fmOptions', this.$fmOptions)
+
+    // this.options = merge(defaultOptions, this.options)
+
     // console.log(this.$fileManager)
-    // this.options = { ...defaultOptions, ...this.opts };
-    this.options = merge(defaultOptions, this.opts)
-    // console.log(this.options);
-    // Object.assign(this.options, defaultOptions, this.opts);
+    // // this.options = { ...defaultOptions, ...this.options };
+    // console.log(this.options)
+    // Object.assign(this.options, defaultOptions, this.options);
     // console.log(defaultOptions)
     // console.log(this.options)
     // return
@@ -483,16 +480,15 @@ export default {
     //
     // this.$fileManager.setApi(this.api);
 
-    if (this.options.onCreated)
-    { this.options.onCreated({ vc: this }) }
+    // if (this.options.onCreated)
+    // { this.options.onCreated({ vc: this }) }
 
     // this._input = null
   },
   mounted () {
     const that = this
-    this.$fileManager.setOptions(this.options)
 
-    this.dropzone = that.$refs.fileManagerDropzone.dropzone
+    // this.dropzone = that.$refs.fileManagerDropzone.dropzone
 
     // dragOverlayComponent.$destroy();
 
@@ -592,6 +588,7 @@ export default {
       this.uploads.push(file)
     },
     onDropzoneSending (file, xhr, formData) {
+      console.log(xhr)
       formData.append('path', this.$fileManager.path)
     },
     _onDropzoneError (file, message, xhr) {
@@ -796,7 +793,8 @@ export default {
       let regex = /[<>:"/\\|?*]/
       // console.log(folderName)
       if (regex.test(folderName)) {
-        throw new Error('ValidationError')
+        throw new Error('Folder name contains invalid characters')
+        this.$emit('error-invalid-folder-name', folderName)
 
         // return [new DOMException(msg), null];
         // return false;
@@ -897,49 +895,10 @@ export default {
     setLoading (isLoading = 1) {
       this.$fileManager.setLoading(isLoading)
     },
-    /**
-         * FA icon class helper
-         */
-    /* faIconClass(file) {
-            return FaIconClassHelper.getFaIconClass(file);
-        } */
   }
 }
 </script>
 
 <style lang="scss">
     @import '../assets/scss/file-manager';
-
-    /*.mm {*/
-/*    position: relative;*/
-/*    .animated {*/
-/*      animation-duration: 0.4s;*/
-/*    }*/
-/*}*/
-
-/*.mm-fixed-height {*/
-/*    > .panel {*/
-/*        position: absolute;*/
-/*        top: 0;*/
-/*        bottom: 0;*/
-/*        left: 0;*/
-/*        right: 0;*/
-/*        margin: 0;*/
-
-/*        > .panel-body {*/
-/*            position: absolute;*/
-/*            top: 0; //47px;*/
-/*            bottom: 0;*/
-/*            left: 0;*/
-/*            right: 0;*/
-/*            overflow: auto;*/
-/*        }*/
-/*    }*/
-
-/*    .mm-content {*/
-/*        // position: relative;*/
-/*        min-height: 250px;*/
-/*    }*/
-/*}*/
-
 </style>

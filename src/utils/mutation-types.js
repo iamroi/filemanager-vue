@@ -1,5 +1,5 @@
 export const FM_SET_OPTIONS = 'FM_SET_OPTIONS'
-// export const FM_SET_API = 'FM_SET_API'
+export const FM_SET_API = 'FM_SET_API'
 export const FM_SET_PATH = 'FM_SET_PATH'
 export const FM_SET_SEARCH = 'FM_SET_SEARCH'
 export const FM_SET_LOADING = 'FM_SET_LOADING'
