@@ -5,7 +5,8 @@
 </template>
 
 <script>
-import Ladda from 'ladda/js/ladda'
+// import Ladda from 'ladda/js/ladda'
+import * as Ladda from 'ladda'
 
 export default {
   name: 'VueLadda',
