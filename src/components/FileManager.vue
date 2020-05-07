@@ -460,6 +460,7 @@ export default {
     this.$fileManager.setOptions(mergedOptions )
     // this.$fileManager.setOptions(this.$fmOptions)
     // this.$fileManager.setApi(this.$fmOptions)
+      console.log('Deploy test')
 
     // Vue.prototype.$fmOptions = merge(cloneDeep(defaultOptions), this.options)
     // console.log('fmOptions', this.$fmOptions)
