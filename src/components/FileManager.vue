@@ -191,7 +191,7 @@
                                 :id="`file-manager-dropzone`"
                                 :class="[isDragging ? 'active' : '']"
                                 ref="fileManagerDropzone"
-                                :options="fmOptions.dropzone"
+                                :options="fmDropzoneOptions"
                                 :useCustomSlot="true"
                                 :include-styling="false"
                                 @vdropzone-drag-start="onDropzoneDragStart"
@@ -354,6 +354,7 @@ export default {
     ...mapState({
       // options: state => state.options,
       fmOptions: state => state['file-manager'].options,
+      fmDropzoneOptions: state => state['file-manager'].options.dropzoneOptions,
       basePath: state => state['file-manager'].options.basePath,
       path: state => state['file-manager'].path,
       files: state => state['file-manager'].files,
@@ -456,8 +457,7 @@ export default {
     const mergedOptions = merge(cloneDeep(defaultOptions), this.options)
     mergedOptions.dropzone.url = mergedOptions.api.uploadUrl // set the dropzone url from api option
 
-    this.$fileManager.setOptions(mergedOptions)
-    console.dir(mergedOptions)
+    this.$fileManager.setOptions(mergedOptions )
     // this.$fileManager.setOptions(this.$fmOptions)
     // this.$fileManager.setApi(this.$fmOptions)
 
